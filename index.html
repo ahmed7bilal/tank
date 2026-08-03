@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="ar" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tank Pro</title><style>
+body{margin:0;background:#0b1220;color:#fff;font-family:Arial}
+.card{max-width:430px;margin:20px auto;background:#162235;padding:18px;border-radius:18px;box-shadow:0 10px 25px #0007}
+h1{text-align:center;color:#5fd3ff}
+input,button{width:100%;padding:12px;margin:7px 0;border-radius:10px;border:0;font-size:18px}
+button{background:#00b050;color:#fff;font-weight:bold}
+.display{background:#000;color:#66ff66;font-size:36px;text-align:center;padding:14px;border-radius:10px;font-family:monospace}
+.tank{position:relative;height:90px;border:4px solid #ddd;border-radius:50px;overflow:hidden;margin:16px 0}
+.water{position:absolute;bottom:0;left:0;height:100%;width:0;background:linear-gradient(90deg,#00d2ff,#0066ff);transition:width .6s}
+.small{font-size:18px;line-height:1.8}
+</style></head><body><div class='card'><h1>🛢️ Tank Calculator</h1>
+<div class='display' id='liters'>0.0 L</div>
+<input id='L' placeholder='الطول (سم)' type='number'>
+<input id='D' placeholder='العرض (سم)' type='number'>
+<input id='H' placeholder='الارتفاع (سم)' type='number'>
+<input id='LV' placeholder='ارتفاع السائل (سم)' type='number'>
+<button onclick='calc()'>احسب</button>
+<div class='tank'><div class='water' id='water'></div></div>
+<div class='small' id='info'>أدخل البيانات</div></div>
+<script>
+function calc(){
+const L=Number(Lv('L'))/100,W=Number(Lv('D')),HH=Number(Lv('H')),D=((W+HH)/2)/100;
+let h=Number(Lv('LV'))/100;
+if(L<=0||D<=0){info.innerHTML='أدخل جميع القيم';return;}
+h=Math.max(0,Math.min(h,D));
+const r=D/2;
+const area=r*r*Math.acos((r-h)/r)-(r-h)*Math.sqrt(Math.max(0,2*r*h-h*h));
+const liters=area*L*1000,total=Math.PI*r*r*L*1000,p=liters/total*100;
+litersEl=document.getElementById('liters');litersEl.textContent=liters.toFixed(1)+' L';
+document.getElementById('water').style.width=p+'%';
+info.innerHTML='السعة: '+total.toFixed(1)+' لتر<br>الامتلاء: '+p.toFixed(1)+'%<br>المتبقي: '+(total-liters).toFixed(1)+' لتر';
+}
+function Lv(id){return document.getElementById(id).value;}
+</script></body></html>
