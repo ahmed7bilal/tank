@@ -1,0 +1,17 @@
+<!doctype html><html lang="ar" dir="rtl"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tank Calculator</title><style>body{background:#101827;font-family:Arial;color:#fff}.c{max-width:900px;margin:auto;padding:20px;background:#1f2a44;border-radius:20px}input,select,button{width:92%;padding:15px;margin-right:auto;margin-left:auto;display:block;margin:8px 0;font-size:20px}.d{background:#000;color:#5f5;padding:20px;text-align:center;font-size:40px}.r{border:2px solid #ccc;padding:15px;border-radius:15px;margin-top:15px}</style>
+<div class=c><div style="text-align:center;color:#ccc">Ahmed Bilal</div><h1>🛢️ Tank Calculator</h1><div class=d id=disp>L 0.0</div>
+<select id=t><option value=rect>مستطيل</option><option value=cyl>دائري أفقي</option></select>
+<input id=a placeholder="الطول"><input id=b placeholder="العرض أو القطر"><input id=c1 placeholder="الارتفاع"><input id=h placeholder="ارتفاع السائل"><button onclick="calc()">احسب</button><div class=r id=res></div></div>
+<script>
+function calc(){
+let L=+a.value,W=+b.value,H=+c1.value,F=+h.value;
+if(!L||!W||!H||F<0){res.innerHTML='أدخل جميع القيم';return;}
+let cap,cur;
+if(t.value=='rect'){cap=L*W*H/1000;cur=L*W*Math.min(F,H)/1000;}
+else{let r=W/2;if(F>W)F=W;let A=r*r*Math.acos((r-F)/r)-(r-F)*Math.sqrt(Math.max(0,2*r*F-F*F));cur=A*L/1000;cap=Math.PI*r*r*L/1000;}
+let rem=cap-cur,p=cur/cap*100;
+disp.textContent='L '+cur.toFixed(1);
+res.innerHTML='السعة: '+cap.toFixed(1)+' لتر<br>الكمية الحالية: '+cur.toFixed(1)+' لتر<br>المتبقي: '+rem.toFixed(1)+' لتر<br>نسبة الامتلاء: '+p.toFixed(1)+'%';
+}
+</script>
